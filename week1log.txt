@@ -1,0 +1,22 @@
+cat > week1log.txt << 'EOF'
+Week 1 Log — Input Image Reconstruction from Deep Features
+Dates: 2025-10-28 to 2025-11-09
+
+1. Project setup
+- Created public GitHub repo: [https://github.com/YOUR_ACCOUNT/CAP6415_F25_project-Image-Feature-Reconstruction]
+- Initialized README with project overview.
+
+2. Topic framing
+- Defined scope: reconstruct input images from intermediate CNN features of ResNet-50.
+- Baseline approach: optimization-based inversion (L-BFGS) leveraging feature perceptual loss and regularizations like total variation and color statistics.
+- Stretch goal: train a decoder network to map features → image; compare vs optimization.
+
+3. Data and models
+- Dataset: subset of ImageNet (validation split) for initial experiments).
+- Backbone model: ResNet-50 pretrained on ImageNet.
+- Environment: PyTorch 2.x, CUDA 11+, Python 3.10.
+
+EOF
+
+
+
