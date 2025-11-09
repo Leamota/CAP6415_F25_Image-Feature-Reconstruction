@@ -1,9 +1,8 @@
-cat > week1log.txt << 'EOF'
-Week 1 Log — Input Image Reconstruction from Deep Features
+Week 1 Log — Image Feature Reconstruction
 Dates: 2025-10-28 to 2025-11-09
 
 1. Project setup
-- Created public GitHub repo: [https://github.com/YOUR_ACCOUNT/CAP6415_F25_project-Image-Feature-Reconstruction]
+- Created public GitHub repo: https://github.com/Leamota/CAP6415_F25_project-Image-Feature-Reconstruction
 - Initialized README with project overview.
 
 2. Topic framing
@@ -12,11 +11,11 @@ Dates: 2025-10-28 to 2025-11-09
 - Stretch goal: train a decoder network to map features → image; compare vs optimization.
 
 3. Data and models
-- Dataset: subset of ImageNet (validation split) for initial experiments).
+- Dataset: subset of ImageNet (validation split) for initial experiments.
 - Backbone model: ResNet-50 pretrained on ImageNet.
 - Environment: PyTorch 2.x, CUDA 11+, Python 3.10.
 
-EOF
+
 
 
 
