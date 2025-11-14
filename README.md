@@ -8,17 +8,16 @@ This project explores the inversion of deep neural network representations: give
 ---
 
 ###  Objectives
-- Implement optimization‑based inversion methods using feature losses and natural image priors.
 - Train learned decoder networks to reconstruct images directly from feature maps.
 - Compare reconstructions across at least four different layers of ResNet‑50.
-- Evaluate results using quantitative metrics (PSNR, SSIM, LPIPS) and qualitative visual comparisons.
+- Evaluate results using quantitative metrics (PSNR, SSIM) and qualitative visual comparisons.
 - Ensure reproducibility through version control, logging, and documented workflows.
 
 ---
 
 ###  Dataset
-The project uses the **ImageNet‑1K dataset** (downloaded via HuggingFace), which contains ~1.28M labeled images across 1,000 object classes.  
-This benchmark dataset provides diverse natural images and aligns with the pretrained ResNet‑50 backbone used for feature extraction.
+As a result of computational and storage constraints, the project utilizes the **imageNet ILSVRC2012 validation** split (50,000 labeled across 1,000 classes).   
+In this subset, practical training and evalution are enabled while preserving the relevance ot imageNet-1K-trained models. 
 
 **Citation:**  
 I have cited the main ImageNet paper (Deng et al., CVPR 2009) as the source of this dataset.  
@@ -45,4 +44,4 @@ In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition
 ```
 
 
-**Maintained:** by CAP6415 Project Team (Fall 2025 – Computer Vision)
+**Maintained:** by CAP6415 Project Team (Fall 2025 – Computer Vision), Florida Atlantic University(FAU).
