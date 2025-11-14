@@ -1,0 +1,45 @@
+Week 2 Log – Input Image Reconstruction from Deep Feature
+
+GitHub repository:
+https://github.com/Leamota/CAP6415_F25_project-Image-Feature-Reconstruction
+
+Date: 2025-11-11 to 2025-11-14
+
+Progress Summary:
+- Finalized dataset selection: opted for ImageNet validation set (ILSVRC2012) due to resource constraints.
+- Downloaded 50,000 validation images from the official ImageNet site.
+- Acquired ground truth labels from ILSVRC2012_validation_ground_truth.txt via GitHub.
+- Confirmed compatibility of dataset with pretrained models (ResNet-50).
+- Selected 4 target layers across varying depths for feature extraction.
+- Implemented feature extraction pipeline using PyTorch.
+
+Challenges:
+- Initial attempts to use full ImageNet-1K were limited by storage and compute capacity.
+- Feature map dimensionality varies significantly across layers, requiring custom handling in decoder design.
+
+Notes:
+- Validation set provides sufficient diversity for testing reconstruction fidelity.
+- Pretrained models retain full ImageNet-1K knowledge, ensuring meaningful feature representations.
+
+- Environment Setup
+  - Configured Google Colab environment for efficient experimentation.
+  - Installed necessary libraries: PyTorch and other required Python packages.
+
+
+- Network Design Decisions
+  - Evaluated suitability of popular architectures and selected ResNet50 for further experiments.
+  - Identified and documented feature layers of interest for inversion tasks.
+
+- Dataset Preparation
+  - Downloaded the ILSVRC2012 validation dataset.
+  - Organized image files into class-specific folders.
+
+ 
+- Scripting Tasks
+  - Developed and tested scripts to preprocess images.
+  - Ensured images are correctly sorted and ready for use in training and evaluation.
+
+---
+
+Summary
+This week, I focused on selecting a dataset that aligns with the project’s core objective while making efficient use of available computational resources. I selected the ImageNet validation set (ILSVRC2012) due to its manageable size and substantial diversity. This choice enables effective testing of image reconstruction model based on deep network feature representation.
