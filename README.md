@@ -16,8 +16,11 @@ This project explores the inversion of deep neural network representations: give
 ---
 
 ###  Dataset
-As a result of computational and storage constraints, the project utilizes the **imageNet ILSVRC2012 validation** split (50,000 labeled across 1,000 classes).   
-In this subset, practical training and evalution are enabled while preserving the relevance ot imageNet-1K-trained models. 
+
+As a result of computational and storage constraints, the project utilizes the **imageNet ILSVRC2012 validation** split (50,000 labeled across 1,000 classes). This 
+images where obtained directly from the [official ImageNet website](https://www.image-net.org/). Our evalution and class referencing are facilitated by  ground truth lables ILSVRC2012_validation_ground_truth.txt available on [ILSVRC2012 Validation Ground Truth File on GitHub](https://github.com/Spiritator/machine-learning-dataset-tool/blob/master/ILSVRC2012_validation_ground_truth.txt).
+
+In this subset, practical training and evalution are enabled while preserving the relevance ot imageNet-1K-trained models. The initial attempt to use the full imageNet-1K was restricted by storage and compute capability available to me.
 
 **Citation:**  
 I have cited the main ImageNet paper (Deng et al., CVPR 2009) as the source of this dataset.  
