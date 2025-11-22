@@ -1,0 +1,29 @@
+Week 3 Log: Feature Extraction Pipeline
+
+
+GitHub repository:
+https://github.com/Leamota/CAP6415_F25_project-Image-Feature-Reconstruction
+
+Date: 2025-11-13 to 2025-11-22
+
+Progress Summary:
+
+1. Implemented the Feature Extractor
+- Developed a modular FeatureExtractor class (`feature_extractor.py`) that attaches forward hooks to four ResNet-50 layers: layer1.2.relu, layer2.3.relu, layer3.5.relu, and layer4.2.relu.
+- Enabled extraction of intermediate feature maps from early, mid, deep, and very deep portions of the network.
+
+2. Extraction Testing & Verification
+- Ran the extractor on sample image batches to verify correct feature retrieval and order.
+- Printed and logged output shapes for each selected layer to confirm the pipeline’s integrity and provide shape references for downstream decoder design.
+
+3. Profiling & Memory Handling
+- Profiled the shapes and characteristics of extracted feature maps across layers.
+- Planned batch sizes and pipeline structure to fit within Colab's GPU memory limits.
+
+4. Feature Concatenation Utility
+- Implemented `extract_and_concat_features.py`, a utility for upsampling features to a common spatial shape and concatenating them for multi-layer experiments.
+
+
+
+Summary:
+All major components of the deep feature extraction pipeline have been built and files: feature_extractor.py, extract_and_concat_features.py and requirements.txt uploaded.
