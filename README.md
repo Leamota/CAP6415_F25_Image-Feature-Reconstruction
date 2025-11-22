@@ -22,6 +22,36 @@ images where obtained directly from the [official ImageNet website](https://www.
 
 In this subset, practical training and evalution are enabled while preserving the relevance ot imageNet-1K-trained models. The initial attempt to use the full imageNet-1K was restricted by storage and compute capability available to me.
 
+
+### Files
+
+#### requirements.txt
+Lists all Python package dependencies required to run this project:
+- `torch>=2.0.0`
+- `torchvision>=0.15.0`
+- `numpy>=1.20.0`
+- `matplotlib>=3.4.0`
+- `scikit-image>=0.19.0`
+
+To install all required libraries, run:
+
+pip install -r requirements.txt
+
+
+#### feature_extractor.py
+Implements the modular feature extraction pipeline.  
+This file contains the `FeatureExtractor` class, which uses forward hooks on multiple ResNet-50 layers to extract intermediate features at several depths.  
+It supports both multi-layer and single-layer feature extraction workflows for downstream image reconstruction and analysis.
+
+#### extract_and_concat_features.py
+Provides a utility function to process and combine feature maps from different network depths.  
+This script upsamples each extracted feature map to a common spatial size and concatenates them along the channel dimension, yielding a tensor suitable for decoders that require joint multi-layer input.
+
+
+
+
+
+
 **Citation:**  
 I have cited the main ImageNet paper (Deng et al., CVPR 2009) as the source of this dataset.  
 If you use ImageNet data in your own work, please also cite the following reference:
