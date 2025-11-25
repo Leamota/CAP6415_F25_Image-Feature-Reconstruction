@@ -34,9 +34,10 @@ Lists all Python package dependencies required to run this project:
 - `matplotlib>=3.4.0`
 - `scikit-image>=0.19.0`
 
-To install all required libraries, run:
+To install all required libraries, **run:**
 
 pip install -r requirements.txt
+
 
 
 #### feature_extractor.py
@@ -52,13 +53,19 @@ This script upsamples each extracted feature map to a common spatial size and co
 
 ---
 
+
 #### Training and Results
-Trained the decoder for 32 epochs on the feature-based reconstruction task, with average training loss decreasing from about 0.97 (epoch 1) to about 0.88 (epoch 32).
-Evaluated reconstruction quality using MSE, PSNR, and SSIM on a representative batch: MSE ≈ 1.0028, PSNR ≈ 1.25 dB, SSIM ≈ 0.1511.
-Saved side-by-side visualizations of original vs reconstructed images for qualitative inspection.
-Experimented with decoder width, depth, and layer/pooling combinations, and compared baseline vs modified models using the same metrics.
+- Trained the decoder for **32 epochs** on the feature-based reconstruction task.  
+- Average training loss decreased from about **0.97 (epoch 1)** to about **0.88 (epoch 32)**.  
+- Evaluated reconstruction quality using:
+  - **MSE ≈ 1.0028**
+  - **PSNR ≈ 1.25 dB**
+  - **SSIM ≈ 0.1511**  
+- Saved side-by-side visualizations of original vs reconstructed images for qualitative inspection.  
+- Experimented with decoder width, depth, and layer/pooling combinations, and compared baseline vs modified models using the same metrics.
 
 ---
+
 
 ### Results
 
@@ -88,16 +95,16 @@ These pairs demonstrate the **feature extraction pipeline** and **decoder output
 
 ---
 
-#### Visual Examples (Markdown Thumbnails)
+#### Visual Examples (
 
 Below are sample pairs of original and reconstructed images:
 
 | Original Image | Reconstruction |
 |----------------|----------------|
-| ![original_0](original_0.png) | ![reconstruction_0](reconstruction_0.png) |
-| ![original_1](original_1.png) | ![reconstruction_1](reconstruction_1.png) |
-| ![original_2](original_2.png) | ![reconstruction_2](reconstruction_2.png) |
-| ... | ... |
+| ![original_0](results/original_0.png) | ![reconstruction_0](results/reconstruction_0.png) |
+| ![original_1](resutls/original_1.png) | ![reconstruction_1](results/reconstruction_1.png) |
+| ![original_2](results/original_2.png) | ![reconstruction_2](results/reconstruction_2.png)|
+| ![original_3](results/original_3.png) | ![reconstruction_3](results/reconstruction_3.png)|
 
 Each row shows the **input image** (left) and its **decoder output** (right).  
 
