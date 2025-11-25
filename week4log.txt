@@ -1,0 +1,29 @@
+Week 4 Log: Training, Evaluation, and Improvement
+
+1. Model Training
+- Ran extended training for 32 epochs to improve decoder performance.
+- Observed the average training loss decrease from about 0.97 at epoch 1 to about 0.88 by epoch 32, with diminishing improvements in later epochs.
+- Experimented with batch sizes and learning rates to balance accuracy and memory usage on available Colab GPUs.
+
+2. Quantitative Evaluation
+- Evaluated reconstructions using Mean Squared Error (MSE), Peak Signal-to-Noise Ratio (PSNR), and Structural Similarity Index (SSIM).
+- For a representative evaluation batch, obtained MSE ≈ 1.0028, PSNR ≈ 1.25 dB, SSIM ≈ 0.1511, indicating noticeable reconstruction error and structural differences between original and reconstructed images at this stage.
+
+3. Qualitative Visualization
+- Visualized reconstructed images from the baseline and modified decoders, saving side-by-side comparisons with original images.
+- Performed layerwise qualitative analysis to observe how feature depth affects reconstruction quality and to identify typical artifacts (blur, loss of fine detail, distortions).
+
+4. Model Improvement and Exploration
+- Modified and widened the decoder architecture to test the effect on reconstruction fidelity and representation capacity.
+- Tried different combinations of feature layers and varied pooling strategies for feature aggregation.
+- Compared results from the baseline and improved models using both quantitative metrics and qualitative inspection.
+
+5. Preliminary Results
+- Observed stable convergence and reduction of MSE after the initial training epochs, with metrics and visuals confirming that the model is learning a non-trivial reconstruction mapping.
+- Average PSNR and SSIM remain relatively low (PSNR around 1.25 dB, SSIM around 0.15), indicating that current reconstructions are still low fidelity and leaving clear room for future improvement.
+- These preliminary results define a baseline for the current architecture and training setup and motivate further work, such as longer training, alternative loss functions, and additional architectural changes.
+
+Summary:
+During Week 4, the focus was on systematic training, rigorous evaluation, iterative model improvement, and the first collection of preliminary results. Results and code changes were documented, visual outputs were archived, and key findings prepared for discussion in the final report.
+
+
