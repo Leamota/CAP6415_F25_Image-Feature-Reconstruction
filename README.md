@@ -43,14 +43,21 @@ Implements the modular feature extraction pipeline.
 This file contains the `FeatureExtractor` class, which uses forward hooks on multiple ResNet-50 layers to extract intermediate features at several depths.  
 It supports both multi-layer and single-layer feature extraction workflows for downstream image reconstruction and analysis.
 
+---
+
 #### extract_and_concat_features.py
 Provides a utility function to process and combine feature maps from different network depths.  
 This script upsamples each extracted feature map to a common spatial size and concatenates them along the channel dimension, yielding a tensor suitable for decoders that require joint multi-layer input.
 
+---
 
+#### Training and Results
+Trained the decoder for 32 epochs on the feature-based reconstruction task, with average training loss decreasing from about 0.97 (epoch 1) to about 0.88 (epoch 32).
+Evaluated reconstruction quality using MSE, PSNR, and SSIM on a representative batch: MSE ≈ 1.0028, PSNR ≈ 1.25 dB, SSIM ≈ 0.1511.
+Saved side-by-side visualizations of original vs reconstructed images for qualitative inspection.
+Experimented with decoder width, depth, and layer/pooling combinations, and compared baseline vs modified models using the same metrics.
 
-
-
+---
 
 **Citation:**  
 I have cited the main ImageNet paper (Deng et al., CVPR 2009) as the source of this dataset.  
