@@ -102,7 +102,7 @@ Below are sample pairs of original and reconstructed images:
 | Original Image | Reconstruction |
 |----------------|----------------|
 | ![original_0](results/original_0.png) | ![reconstruction_0](results/reconstruction_0.png) |
-| ![original_1](resutls/original_1.png) | ![reconstruction_1](results/reconstruction_1.png) |
+| ![original_1](results/original_1.png) | ![reconstruction_1](results/reconstruction_1.png) |
 | ![original_2](results/original_2.png) | ![reconstruction_2](results/reconstruction_2.png)|
 | ![original_3](results/original_3.png) | ![reconstruction_3](results/reconstruction_3.png)|
 
@@ -140,6 +140,5 @@ In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition
   organization={IEEE}
 }
 ```
-
 
 **Maintained:** by CAP6415 Project Team (Fall 2025 – Computer Vision), Florida Atlantic University(FAU).
