@@ -2,7 +2,7 @@
 
 ##  Project Description
 
-### Image Feature Reconstruction 
+### Abstract
 This project explores the inversion of deep neural network representations: given feature maps extracted from intermediate layers of a pretrained backbone (ResNet‑50), the goal is to reconstruct the original input image. By analyzing features from multiple depths—early, mid, deep, and very deep layers—we investigate how much visual information is preserved at different stages of the network.
 
 ---
@@ -22,6 +22,7 @@ images where obtained directly from the [official ImageNet website](https://www.
 
 In this subset, practical training and evalution are enabled while preserving the relevance ot imageNet-1K-trained models. The initial attempt to use the full imageNet-1K was restricted by storage and compute capability available to me.
 
+---
 
 ### Files
 
@@ -58,6 +59,56 @@ Saved side-by-side visualizations of original vs reconstructed images for qualit
 Experimented with decoder width, depth, and layer/pooling combinations, and compared baseline vs modified models using the same metrics.
 
 ---
+
+### Results
+
+The `results` folder contains original images and their corresponding reconstructed images from the model.
+
+#### Filenames Pattern
+- `original_X.jpg` → Original test image, where **X** is the sample index  
+- `reconstruction_X.jpg` → Model output for the same index  
+
+This structure allows direct visual comparison between ground-truth and reconstructed samples for both qualitative and quantitative evaluation.
+
+---
+
+#### Example (Text Table)
+
+| Original Image   | Reconstruction       |
+|------------------|----------------------|
+| original_0.png   | reconstruction_0.png |
+| original_1.png   | reconstruction_1.png |
+| original_2.png   | reconstruction_2.png |
+| ...              | ...                  |
+
+For example:  
+`original_1.jpg` and `reconstruction_1.jpg` show the input and its reconstructed output.
+
+These pairs demonstrate the **feature extraction pipeline** and **decoder output quality**.
+
+---
+
+#### Visual Examples (Markdown Thumbnails)
+
+Below are sample pairs of original and reconstructed images:
+
+| Original Image | Reconstruction |
+|----------------|----------------|
+| ![original_0](original_0.png) | ![reconstruction_0](reconstruction_0.png) |
+| ![original_1](original_1.png) | ![reconstruction_1](reconstruction_1.png) |
+| ![original_2](original_2.png) | ![reconstruction_2](reconstruction_2.png) |
+| ... | ... |
+
+Each row shows the **input image** (left) and its **decoder output** (right).  
+
+---
+
+**Note:**  
+You can view these files in the `results` directory of the repository or download them for further analysis.
+
+---
+
+
 
 **Citation:**  
 I have cited the main ImageNet paper (Deng et al., CVPR 2009) as the source of this dataset.  
