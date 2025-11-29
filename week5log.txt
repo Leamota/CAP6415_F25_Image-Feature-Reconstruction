@@ -1,0 +1,25 @@
+Week 5 Log: Finalization and Reporting
+
+GitHub repository:
+https://github.com/Leamota/CAP6415_F25_project-Image-Feature-Reconstruction
+
+Date: 2025-11-26 
+
+Results Compilation:
+- Gathered all figures, metrics, and reconstructed image outputs for comparison across layers, decoder variants, and training configurations.
+- Organized quantitative evaluation (MSE, PSNR, SSIM) and qualitative examples for clear visual discussion.
+
+Documentation and Reporting:
+- Drafted and finalized the main project report, README, and associated documentation to detail the experimental pipeline and its rationale.
+
+Presented explanations of key constraints, underlying methods, and observed findings for interpretability and reproducibility.
+
+Model and Code Preservation:
+- Saved final trained model weights and configuration files to ensure reproducibility and reusability for future experiments or peer review.
+- Cleaned and annotated codebase for coherence and ease of navigation by other users and reviewers.
+
+Supplementary Material Preparation:
+- Created a demo notebook illustrating step-by-step reconstruction and analysis for potential sharing or demonstration.
+
+Summary:
+Week 5 focused on thorough documentation, result organization, and presentation. All materials required for grading, review, or future work were compiled, clearly explained, and archived for reproducibility.
