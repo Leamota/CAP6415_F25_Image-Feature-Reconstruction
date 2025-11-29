@@ -1,144 +1,225 @@
-# CAP6415_F25_Image-Feature-Reconstruction
+# Input Image Reconstruction from Deep Network Features
 
-##  Project Description
-
-### Abstract
-This project explores the inversion of deep neural network representations: given feature maps extracted from intermediate layers of a pretrained backbone (ResNet‑50), the goal is to reconstruct the original input image. By analyzing features from multiple depths—early, mid, deep, and very deep layers—we investigate how much visual information is preserved at different stages of the network.
-
----
-
-###  Objectives
-- Train learned decoder networks to reconstruct images directly from feature maps.
-- Compare reconstructions across at least four different layers of ResNet‑50.
-- Evaluate results using quantitative metrics (PSNR, SSIM) and qualitative visual comparisons.
-- Ensure reproducibility through version control, logging, and documented workflows.
-
----
-
-###  Dataset
-
-As a result of computational and storage constraints, the project utilizes the **imageNet ILSVRC2012 validation** split (50,000 labeled across 1,000 classes). This 
-images where obtained directly from the [official ImageNet website](https://www.image-net.org/). Our evalution and class referencing are facilitated by  ground truth lables ILSVRC2012_validation_ground_truth.txt available on [ILSVRC2012 Validation Ground Truth File on GitHub](https://github.com/Spiritator/machine-learning-dataset-tool/blob/master/ILSVRC2012_validation_ground_truth.txt).
-
-In this subset, practical training and evalution are enabled while preserving the relevance ot imageNet-1K-trained models. The initial attempt to use the full imageNet-1K was restricted by storage and compute capability available to me.
-
----
-
-### Files
-
-#### requirements.txt
-Lists all Python package dependencies required to run this project:
-- `torch>=2.0.0`
-- `torchvision>=0.15.0`
-- `numpy>=1.20.0`
-- `matplotlib>=3.4.0`
-- `scikit-image>=0.19.0`
-
-To install all required libraries, **run:**
-
-pip install -r requirements.txt
+## Abstract
+Reconstructing input images from intermediate neural network features provides insight into the information preserved at different depths of deep models.  
+This project leverages a pretrained **ResNet‑50** and a convolutional decoder to reconstruct 224×224 images from multi‑layer feature maps.  
+Reconstruction quality is evaluated using **MSE, PSNR, and SSIM**, with the pipeline designed to run efficiently under Google Colab GPU constraints.  
+The emphasis is on **reproducibility, interpretability, and educational clarity**.
 
 
 
-#### feature_extractor.py
-Implements the modular feature extraction pipeline.  
-This file contains the `FeatureExtractor` class, which uses forward hooks on multiple ResNet-50 layers to extract intermediate features at several depths.  
-It supports both multi-layer and single-layer feature extraction workflows for downstream image reconstruction and analysis.
-
----
-
-#### extract_and_concat_features.py
-Provides a utility function to process and combine feature maps from different network depths.  
-This script upsamples each extracted feature map to a common spatial size and concatenates them along the channel dimension, yielding a tensor suitable for decoders that require joint multi-layer input.
-
----
+## Problem Statement
+Deep convolutional networks achieve state‑of‑the‑art performance on vision tasks, yet their **internal feature representations remain difficult to interpret**.  
+This project explores:
+- How much spatial detail and semantic structure is preserved at different depths of ResNet‑50.  
+- Whether a lightweight decoder can reconstruct meaningful images from multi‑layer features under memory constraints.  
+- How quantitative metrics (**MSE, PSNR, SSIM**) align with qualitative visual fidelity.  
+- How to design a reproducible pipeline that runs efficiently in Google Colab.  
 
 
-#### Training and Results
-- Trained the decoder for **32 epochs** on the feature-based reconstruction task.  
-- Average training loss decreased from about **0.97 (epoch 1)** to about **0.88 (epoch 32)**.  
-- Evaluated reconstruction quality using:
-  - **MSE ≈ 1.0028**
-  - **PSNR ≈ 1.25 dB**
-  - **SSIM ≈ 0.1511**  
-- Saved side-by-side visualizations of original vs reconstructed images for qualitative inspection.  
-- Experimented with decoder width, depth, and layer/pooling combinations, and compared baseline vs modified models using the same metrics.
 
----
+## Project Overview
+This project demonstrates how input images can be reconstructed from feature maps extracted at multiple depths of **ResNet‑50**.  
+The goal is to study how well a decoder can invert intermediate representations and to understand what spatial and semantic information is retained or lost across layers.
+
+### Objectives
+- Train decoder networks to reconstruct images directly from feature maps.  
+- Compare reconstructions across four representative ResNet‑50 layers (early, mid, deep, very deep).  
+- Evaluate results using both **quantitative metrics** and **qualitative comparisons**.  
+- Ensure reproducibility through version control, logging, and documented workflows.  
+
+### Motivation
+- Interpret deep networks by visualizing what internal features encode.  
+- Explore invariance and abstraction by comparing reconstructions from different depths.  
+- Provide a compact, reproducible pipeline suitable for teaching, experimentation, and future research.  
 
 
-### Results
 
-The `results` folder contains original images and their corresponding reconstructed images from the model.
+## Dataset
+- **ImageNet ILSVRC2012 validation split** (50,000 labeled images across 1,000 classes).  
+- Images obtained from the [official ImageNet website](https://www.image-net.org/).  
+- Ground‑truth labels available via [ILSVRC2012_validation_ground_truth.txt](https://github.com/Spiritator/machine-learning-dataset-tool/blob/master/ILSVRC2012_validation_ground_truth.txt).  
 
-#### Filenames Pattern
-- `original_X.jpg` → Original test image, where **X** is the sample index  
-- `reconstruction_X.jpg` → Model output for the same index  
+**Notes:**
+- Only the validation split is used due to compute/storage constraints.  
+- Data organized into per‑class folders for `torchvision.datasets.ImageFolder`.  
+- Full ImageNet‑1K dataset was not feasible under Colab GPU limits.  
 
-This structure allows direct visual comparison between ground-truth and reconstructed samples for both qualitative and quantitative evaluation.
 
----
 
-#### Example (Text Table)
+## Methodology
 
-| Original Image   | Reconstruction       |
-|------------------|----------------------|
-| original_0.png   | reconstruction_0.png |
-| original_1.png   | reconstruction_1.png |
-| original_2.png   | reconstruction_2.png |
-| ...              | ...                  |
+### 1. Data Loading
+- Loads validation images with `ImageFolder` and `DataLoader`.  
+- Applies standard ImageNet preprocessing: resize → center crop → tensor conversion → normalization.  
 
-For example:  
-`original_1.jpg` and `reconstruction_1.jpg` show the input and its reconstructed output.
+### 2. Feature Extraction
+- Loads pretrained **ResNet‑50** from `torchvision.models`.  
+- Registers forward hooks on four layers:  
+  - `layer1.2.relu`  
+  - `layer2.3.relu`  
+  - `layer3.5.relu`  
+  - `layer4.2.relu`  
+- `FeatureExtractor` outputs feature maps in a fixed order per batch.  
 
-These pairs demonstrate the **feature extraction pipeline** and **decoder output quality**.
+### 3. Feature Concatenation
+- Resizes feature maps to a common spatial size via bilinear interpolation.  
+- Concatenates along the channel dimension to form a unified tensor for the decoder.  
 
----
+### 4. Decoder Architecture
+- Implements **ConvOnlyDecoder**, a fully convolutional decoder with stacked `ConvTranspose2d` layers.  
+- Progressively upsamples features back to 224×224 resolution.  
+- Uses ReLU activations and a final Sigmoid for outputs in [0,1].  
 
-#### Visual Examples (
+### 5. Training
+- Optimizes with **MSE loss** between reconstructed and original images.  
+- Configurable batch size and learning rate.  
+- Logs average training loss per epoch.  
 
-Below are sample pairs of original and reconstructed images:
+### 6. Evaluation
+- Reconstructs batches and displays **original vs reconstructed pairs**.  
+- Computes **MSE, PSNR, SSIM**.  
+- Combines metrics with qualitative plots for comprehensive evaluation.  
 
+### 7. Saving Outputs
+- Saves trained decoder weights.  
+- Exports original/reconstruction pairs and training loss curves into `results/`.  
+
+
+
+## Environment and Data Handling
+
+###  Google Colab + Google Drive
+```bash
+from google.colab import drive
+drive.mount('/content/drive')
+```
+
+- Connects **Colab** to **Google Drive** for persistent storage of **datasets, checkpoints, and results**.
+
+
+### Large Dataset Upload Strategy
+
+##### Split 6GB archive into 2GB chunks
+```bash
+
+split -b 2000M ILSVRC2012_img_val.tar part_
+```
+
+#### Reassemble in Colab
+```bash
+
+!cat /content/drive/MyDrive/part_* > /content/ILSVRC2012_img_val.tar
+```
+- Extracted and organized into **per‑class folders** for use with `torchvision.datasets.ImageFolder`.
+
+## Training and Results
+
+- Trained for **32 epochs**.  
+- Loss decreased from **0.97 → 0.88**.  
+
+### Final Metrics
+- **MSE ≈ 1.00**  
+- **PSNR ≈ 1.25 dB**  
+- **SSIM ≈ 0.15**  
+
+### Observations
+- Reconstructions are blurred but retain coarse spatial and color information.  
+- Side‑by‑side comparisons are saved in the `results/` directory.
+
+## Results Folder
+
+### Filename Pattern
+- `original_X.jpg` → Ground truth image  
+- `reconstruction_X.jpg` → Decoder output  
+
+### Visual Examples
 | Original Image | Reconstruction |
 |----------------|----------------|
 | ![original_0](results/original_0.png) | ![reconstruction_0](results/reconstruction_0.png) |
 | ![original_1](results/original_1.png) | ![reconstruction_1](results/reconstruction_1.png) |
-| ![original_2](results/original_2.png) | ![reconstruction_2](results/reconstruction_2.png)|
-| ![original_3](results/original_3.png) | ![reconstruction_3](results/reconstruction_3.png)|
+| ![original_2](results/original_2.png) | ![reconstruction_2](results/reconstruction_2.png) |
+| ![original_3](results/original_3.png) | ![reconstruction_3](results/reconstruction_3.png) |
 
-Each row shows the **input image** (left) and its **decoder output** (right).  
-
----
-
-**Note:**  
-You can view these files in the `results` directory of the repository or download them for further analysis.
-
----
+- Each row shows the **original input image** (left) and the **decoder’s reconstructed output** (right).
 
 
 
-**Citation:**  
-I have cited the main ImageNet paper (Deng et al., CVPR 2009) as the source of this dataset.  
-If you use ImageNet data in your own work, please also cite the following reference:
-
-
-Deng, Jia; Dong, Wei; Socher, Richard; Li, Li‑Jia; Li, Kai; and Fei‑Fei, Li.  
-*ImageNet: A Large‑Scale Hierarchical Image Database.*  
-In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2009, pp. 248–255.
-
----
-
-
-
-```bibtex
-@inproceedings{deng2009imagenet,
-  title={Imagenet: A large-scale hierarchical image database},
-  author={Deng, Jia and Dong, Wei and Socher, Richard and Li, Li-Jia and Li, Kai and Fei-Fei, Li},
-  booktitle={2009 IEEE conference on computer vision and pattern recognition},
-  pages={248--255},
-  year={2009},
-  organization={IEEE}
-}
+## Repository Structure
+```bash
+├── README.md
+├── requirements.txt
+├── import.py                   # Environment setup
+├── data_loader.py              # Loads and preprocesses ImageNet validation images
+├── feature_extract.py           # Extracts features from ResNet-50
+├── extract_and_concat_feature.py # Resize + concatenate feature maps
+├── decoder.py                   # Decoder architecture
+├── initialize_decoder.py        # Decoder initialization
+├── train.py                     # Training loop (MSE loss, logging)
+├── reconstruct_and_evaluate.py  # Reconstruction, visualization, metrics
+├── save_decoder.py              # Save trained decoder
+├── save_reconstruction.py       # Save reconstructed outputs
+├── results/                     # Example reconstructions and plots
+├── logs/                        # Weekly progress logs
+│   ├── week1log.txt
+│   ├── week2log.txt
+│   ├── week3log.txt
+│   ├── week4log.txt
+│   └── week5log.txt
+└── notebooks/                   # Colab notebooks for analysis
 ```
 
-**Maintained:** by CAP6415 Project Team (Fall 2025 – Computer Vision), Florida Atlantic University(FAU).
+
+## Setup and Usage
+
+
+### Install dependencies
+```bash
+pip install -r requirements.txt
+```
+
+### Train the decoder
+```bash
+python train.py
+```
+### Reconstruct and evaluate
+```bash
+python reconstruct_and_evaluate.py
+```
+
+
+## References
+
+- Deng, J.; Dong, W.; Socher, R.; Li, L.; Li, K.; Fei‑Fei, L.  
+  *ImageNet: A Large‑Scale Hierarchical Image Database.*  
+  Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2009.
+
+- He, K.; Zhang, X.; Ren, S.; Sun, J.  
+  *Deep Residual Learning for Image Recognition.*  
+  Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2016.
+
+- Wang, Z.; Bovik, A.; Sheikh, H.; Simoncelli, E.  
+  *Image Quality Assessment: From Error Visibility to Structural Similarity.*  
+  IEEE Transactions on Image Processing, 2004.
+
+- Johnson, J.; Alahi, A.; Fei‑Fei, L.  
+  *Perceptual Losses for Real‑Time Style Transfer and Super‑Resolution.*  
+  European Conference on Computer Vision (ECCV), 2016.
+
+
+## License
+
+
+MIT License – See LICENSE file for details.
+
+
+## Author
+**Lawrence A. Egharevba** – *CAP6415 – Computer Vision (Fall 2025)* – **Florida Atlantic University (FAU)**
+
+## Contact
+
+📧 **Email** legharevba2024@fau.edu | asemotalea@gmail.com  
+
+**Maintained by the CAP6415 Project Team** – *Computer Vision – Fall 2025* – **Florida Atlantic University (FAU)**
+
+
