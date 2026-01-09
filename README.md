@@ -215,12 +215,7 @@ MIT License – See LICENSE file for details.
 
 
 ## Author
-**Lawrence A. Egharevba** – *CAP6415 – Computer Vision (Fall 2025)* – **Florida Atlantic University (FAU)**
+**Lawrence A. Egharevba** – *CAP6415 – Computer Vision (Fall 2025)*
 
-## Contact
-
-📧 **Email** legharevba2024@fau.edu | asemotalea@gmail.com  
-
-**Maintained by the CAP6415 Project Team** – *Computer Vision – Fall 2025* – **Florida Atlantic University (FAU)**
 
 
